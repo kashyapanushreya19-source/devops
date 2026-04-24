@@ -29,4 +29,14 @@ jobs:
       - name: PipelineBreak
         run: echo "PipelineBreak"
 
+      - name: ghcr login to 
+        run: echo"${{secrets.ghcr_token}} | docker login ${{ github.actor }} --password-stdin"
+
+      - name: build a docker image
+        run: docker build -t ghcr.io/${{github.actor}}/devops:v1 .
+
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/${{ github.actor }}/my-app:latest
+
       
