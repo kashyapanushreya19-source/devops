@@ -1,4 +1,4 @@
-name : Simple CI Pipeline
+name: Simple CI Pipeline
 
 on:
   push:
@@ -6,9 +6,13 @@ on:
   pull_request:
     branches: ["main"]
 
+permissions:
+  contents: read
+  packages: write   # 🔥 THIS FIXES PERMISSION ERROR
+
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
 
     steps:
       - name: Checkout repository
@@ -29,14 +33,14 @@ jobs:
       - name: PipelineBreak
         run: echo "PipelineBreak"
 
-      - name: ghcr login to 
-        run: echo"${{secrets.ghcr_token}} | docker login ${{ github.actor }} --password-stdin"
+      #   GHCR login
+      - name: Login to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: build a docker image
-        run: docker build -t ghcr.io/${{github.actor}}/devops:v1 .
+      #  Build image
+      - name: Build Docker image
+        run: docker build -t ghcr.io/${{ github.actor }}/devops:v1 .
 
+      #  Push SAME image
       - name: Push Docker image
-        run: |
-          docker push ghcr.io/${{ github.actor }}/my-app:latest
-
-      
+        run: docker push ghcr.io/${{ github.actor }}/devops:v1
