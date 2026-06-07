@@ -1,28 +1,32 @@
 pipeline {
-    agent any
+agent any
 
-    stages {
+```
+stages {
 
-        stage('Quality Control') {
-            steps {
-                echo 'Running Quality Control'
-                bat 'echo QC completed > results\\qc_report.txt'
-            }
+    stage('Quality Control') {
+        steps {
+            echo 'Running Quality Control'
+            sh 'mkdir -p results'
+            sh 'echo QC completed > results/qc_report.txt'
         }
-
-        stage('Alignment') {
-            steps {
-                echo 'Running Alignment'
-                bat 'echo Alignment completed > results\\alignment.bam'
-            }
-        }
-
-        stage('Variant Calling') {
-            steps {
-                echo 'Running Variant Calling'
-                bat 'echo Variant calling completed > results\\variants.vcf'
-            }
-        }
-
     }
+
+    stage('Alignment') {
+        steps {
+            echo 'Running Alignment'
+            sh 'echo Alignment completed > results/alignment.bam'
+        }
+    }
+
+    stage('Variant Calling') {
+        steps {
+            echo 'Running Variant Calling'
+            sh 'echo Variant calling completed > results/variants.vcf'
+        }
+    }
+
+}
+```
+
 }
