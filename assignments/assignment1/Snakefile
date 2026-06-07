@@ -1,0 +1,33 @@
+ rule all:
+    input:
+        "results/variants.vcf"
+
+rule quality_control:
+    input:
+        "data/sample.fastq"
+    output:
+        "results/qc_report.txt"
+    shell:
+        """
+        echo "QC completed" > {output}
+        """
+
+rule alignment:
+    input:
+        "results/qc_report.txt"
+    output:
+        "results/alignment.bam"
+    shell:
+        """
+        echo "Alignment completed" > {output}
+        """
+
+rule variant_calling:
+    input:
+        "results/alignment.bam"
+    output:
+        "results/variants.vcf"
+    shell:
+        """
+        echo "Variant calling completed" > {output}
+        """
