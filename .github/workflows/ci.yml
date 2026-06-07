@@ -8,7 +8,7 @@ on:
 
 permissions:
   contents: read
-  packages: write   # 🔥 THIS FIXES PERMISSION ERROR
+  packages: write   #  THIS FIXES PERMISSION ERROR
 
 jobs:
   build:
